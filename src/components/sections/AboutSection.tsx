@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   aboutCopy,
@@ -36,6 +37,20 @@ export function AboutSection() {
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
           >
+            <div className="relative mb-8 w-56 md:w-64">
+              <div
+                aria-hidden="true"
+                className="absolute -inset-1.5 rounded-3xl bg-gradient-to-br from-cyan-400/40 via-indigo-500/30 to-fuchsia-500/40 blur-md"
+              />
+              <Image
+                src="/profile.jpg"
+                alt="Portrait of Satyam Katara"
+                width={512}
+                height={512}
+                className="relative aspect-square w-full rounded-3xl border border-white/10 object-cover"
+                priority={false}
+              />
+            </div>
             <p className="text-base leading-relaxed text-slate-300 md:text-lg">
               {aboutCopy}
             </p>
