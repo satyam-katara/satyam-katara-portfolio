@@ -48,7 +48,7 @@ export const identity: Identity = {
     enabled: true,
     label: "Open to Data Analyst roles · Graduating 2027",
   },
-  siteUrl: "", // TODO: set after deployment, e.g. "https://satyamkatara.vercel.app"
+  siteUrl: "https://satyam-katara-portfolio.vercel.app",
 };
 
 // ---------------------------------------------------------------------------
@@ -112,7 +112,7 @@ export const education: Education = {
   schoolShort: "HCST",
   location: "Mathura, Uttar Pradesh",
   graduating: "2027",
-  cgpa: "7.6",
+  cgpa: "7.45",
   showCgpa: true,
 };
 
@@ -219,10 +219,10 @@ export const skillGroups: SkillGroup[] = [
       { name: "Jupyter", level: "Daily use" },
       { name: "Git & GitHub", level: "Daily use" },
       { name: "SQLite", level: "Project-proven" },
-      { name: "ML Fundamentals", level: "Familiar" },
-      { name: "scikit-learn", level: "Familiar" },
+      { name: "ML Fundamentals", level: "Project-proven" },
+      { name: "scikit-learn", level: "Project-proven" },
       { name: "NLP (Basics)", level: "Familiar" },
-      { name: "SQL Server", level: "Familiar" },
+      { name: "SQL Server", level: "Project-proven" },
       { name: "dbt", level: "Familiar" },
     ],
   },
@@ -242,6 +242,12 @@ export interface Certification {
 }
 
 export const certifications: Certification[] = [
+  {
+    title: "SQL (Advanced)",
+    issuer: "HackerRank",
+    credentialUrl: null,
+    certificateImage: null,
+  },
   {
     title: "Microsoft Certified: Azure AI Fundamentals (AI-900)",
     issuer: "Microsoft",
@@ -336,6 +342,158 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "rfm-customer-segmentation",
+    title: "RFM Customer Segmentation",
+    category: "Customer Analytics",
+    tags: ["SQL"],
+    problem:
+      "An online retailer with ~1.06M transactions could not tell its most valuable customers from one-time buyers, so retention spend went to the wrong people.",
+    approach: [
+      "Segmented 5,878 customers from ~1.06M Online Retail II transactions in pure T-SQL (SQL Server), cleaning cancellations, returns and missing-customer rows.",
+      "Scored Recency, Frequency and Monetary with NTILE(5) into 5 rule-based segments.",
+      "Extended the project with a 12-month forward CLV model built on retention-adjusted segment value.",
+    ],
+    keyFindings: [
+      "Champions, the top 21.6% of customers, drive 67.9% of gross purchase value (total 17,743,429.08).",
+      "Champions average CLV 5,821.12 per customer and 52.27% of retention-adjusted forward value (total 14,122,577.24).",
+      "At Risk and Hibernating segments show 0.00 adjusted CLV, so their value is recoverable only through win-back.",
+    ],
+    tools: ["T-SQL", "SQL Server"],
+    github: "https://github.com/satyam-katara/rfm-customer-segmentation",
+    liveUrl: null,
+    preview: {
+      type: "generated",
+      alt: "Abstract preview: RFM customer segmentation motif",
+    },
+  },
+  {
+    slug: "excel-report-automation",
+    title: "Excel Report Automation",
+    category: "MIS Automation",
+    tags: ["Python", "EDA"],
+    problem:
+      "A monthly Superstore MIS report took ~3.5 hours of manual work every month: cleaning, KPI calculations, and workbook formatting.",
+    approach: [
+      "Built a pandas pipeline for cleaning, KPI and breakdown calculations over 9,994 transactions (2014-2017).",
+      "Generated an openpyxl workbook with 8 sheets, KPI cards and charts.",
+      "Added a VBA control panel (month picker + one-click GENERATE MIS REPORT button) and a monthly Windows Task Scheduler job.",
+      "Added run logging: a dated log per run, with failures writing an ALERT file with traceback and exit code 1.",
+    ],
+    keyFindings: [
+      "Cut report generation from ~3.5 hours to 2.71 seconds.",
+      "Report covers Sales $2,297,200.86 and Profit $286,397.02.",
+    ],
+    tools: ["Python", "Pandas", "OpenPyXL", "VBA", "Excel"],
+    github: "https://github.com/satyam-katara/excel-report-automation",
+    liveUrl: null,
+    preview: {
+      type: "generated",
+      alt: "Abstract preview: Excel report automation motif",
+    },
+  },
+  {
+    slug: "telecom-customer-churn-analysis",
+    title: "Telecom Customer Churn Analysis",
+    category: "Churn Analytics",
+    tags: ["SQL", "Python"],
+    problem:
+      "A telecom operator was losing over a quarter of its customers without knowing which segments were leaving or why.",
+    approach: [
+      "Analyzed 7,043 telecom customers end-to-end in SQL Server + Python, profiling and cleaning the data.",
+      "Segmented churn by contract, tenure, payment method and internet service.",
+      "Validated 11 churn patterns with Chi-square / Mann-Whitney U tests (Holm-corrected) and built 3 data-backed retention strategies with KPIs and treatment-vs-control pilots.",
+      "Extended with ML: a Gradient Boosting churn model ranking the top 100 at-risk customers for targeted win-back.",
+    ],
+    keyFindings: [
+      "Month-to-month contracts churn at 42.71% and new-tenure customers at 47.44%; $139,130.85 in monthly charge exposure.",
+      "Contract is the strongest churn driver (Cramer's V = 0.41).",
+      "Gradient Boosting model: test ROC-AUC 0.8434, top-decile lift 2.91x; top 100 at-risk customers worth $7,782/month.",
+    ],
+    tools: ["SQL Server", "Python", "scikit-learn", "Pandas"],
+    github: "https://github.com/satyam-katara/telecom-customer-churn-analysis",
+    liveUrl: null,
+    preview: {
+      type: "generated",
+      alt: "Abstract preview: telecom churn analysis motif",
+    },
+  },
+  {
+    slug: "ab-test-design-sizing",
+    title: "A/B Test Design and Sizing",
+    category: "Experimentation",
+    tags: ["Python"],
+    problem:
+      "A checkout change promised a conversion lift, but nobody knew how many users the test needed or how to avoid false positives from peeking at results early.",
+    approach: [
+      "Designed an A/B test for a checkout conversion lift (10% to 12%), computing the required sample size at 5% significance and 80% power, with a sensitivity table across 1-3 point MDEs.",
+      "Verified the design with 10,000 Monte Carlo simulations.",
+      "Extended with sequential testing: a simulation-calibrated O'Brien-Fleming-style boundary to control false positives under interim looks.",
+      "Includes a sizing calculator notebook and a reusable one-page test plan template.",
+    ],
+    keyFindings: [
+      "Required sample size: 3,839 users per group (7,678 total).",
+      "Simulations confirmed the design: false-alarm rate 4.78%, power 80.75%.",
+      "8 unadjusted interim checks inflate false positives from ~5% to 17.68% (3.7x); the calibrated boundary brought the false-alarm rate back to 4.88% on fresh independent evaluation.",
+    ],
+    tools: ["Python", "Statistics", "Monte Carlo Simulation"],
+    github: "https://github.com/satyam-katara/ab-test-design-sizing",
+    liveUrl: null,
+    preview: {
+      type: "generated",
+      alt: "Abstract preview: A/B test design motif",
+    },
+  },
+  {
+    slug: "olist-ecommerce-analytics",
+    title: "Olist E-commerce Analytics",
+    category: "E-commerce Analytics",
+    tags: ["SQL", "Power BI"],
+    problem:
+      "A Brazilian e-commerce marketplace needed one trusted view of revenue, delivery, and customer satisfaction across 99,441 orders.",
+    approach: [
+      "Built a SQL Server star schema (5 dimensions, 4 facts) with 5 analytical views over the Olist dataset.",
+      "Built a 5-page Power BI dashboard covering revenue, orders, freight, reviews and delivery performance.",
+      "Validated the pipeline end-to-end, reconciling source-to-fact revenue and freight to the cent with zero duplicate OrderIDs and zero missing dimension keys.",
+      "Extended with DAX time intelligence: Revenue and Orders YTD/MTD, last-year comparisons and YoY growth measures.",
+    ],
+    keyFindings: [
+      "R$13,591,643.70 in item revenue, AOV R$136.68, freight R$2,251,909.54.",
+      "Average review 4.09/5 and 93.23% on-time delivery across 99,441 orders.",
+    ],
+    tools: ["SQL Server", "T-SQL", "Power BI", "DAX"],
+    github: "https://github.com/satyam-katara/olist-ecommerce-analytics",
+    liveUrl: null,
+    preview: {
+      type: "generated",
+      alt: "Abstract preview: Olist e-commerce analytics motif",
+    },
+  },
+  {
+    slug: "marketing-ab-test-analysis",
+    title: "Reading a Real A/B Test",
+    category: "Experimentation",
+    tags: ["SQL", "Python"],
+    problem:
+      "A marketing A/B test with 588,101 users claimed the ad worked, but the result needed a full read: was the lift real, how big was it, and was a rollout justified?",
+    approach: [
+      "Ran SQL Server integrity checks (0 missing, 0 duplicate user IDs) plus Python statistics on the full test data.",
+      "Measured conversion lift with a z-test, confidence interval and effect size.",
+      "Sized the business impact in incremental conversions and checked dose-response across ad exposure levels.",
+    ],
+    keyFindings: [
+      "Ad converted at 2.5547% vs 1.7854% for the PSA control: absolute lift +0.7692 pp (+43.09% relative), z = 7.3701, p < 0.001.",
+      "~4,343 incremental conversions (7.69 per 1,000 users).",
+      "Recommended a CONDITIONAL rollout only, flagging the small effect (Cohen's h = 0.053) and missing cost data.",
+    ],
+    tools: ["SQL Server", "Python", "Statistics"],
+    github: "https://github.com/satyam-katara/marketing-ab-test-analysis",
+    liveUrl: null,
+    preview: {
+      type: "generated",
+      alt: "Abstract preview: marketing A/B test analysis motif",
+    },
+  },
+  {
     slug: "mutual-fund-analytics-dashboard",
     title: "Mutual Fund Analytics Dashboard",
     category: "Fintech Analytics",
@@ -367,15 +525,14 @@ export const projects: Project[] = [
     problem:
       "Equity research across 100 large-cap stocks means juggling ratios, peers, and valuations from disconnected sources.",
     approach: [
-      "Built an end-to-end ETL pipeline feeding a SQLite store guarded by 14+ data quality rules.",
+      "Built an end-to-end ETL pipeline feeding a SQLite store guarded by 15 data-quality checks.",
       "Implemented a financial ratio engine covering CAGR, profitability, and capital allocation.",
       "Built a multi-metric stock screener with composite scoring and peer comparison.",
-      "Added an NLP-driven insights engine and automated PDF reporting across 92 companies and 11 sectors.",
+      "Added an NLP-driven insights engine and automated PDF reporting across 92 companies and 10 sectors.",
       "Delivered a Streamlit dashboard with a dedicated valuation module.",
     ],
     tools: ["Python", "SQL", "SQLite", "Streamlit", "Pandas", "NLP"],
-    // TODO: verify the repository URL before linking.
-    github: null,
+    github: "https://github.com/satyam-katara/nifty100-financial-intelligence-platform",
     liveUrl: null,
     preview: {
       type: "generated",
